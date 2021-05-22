@@ -1,0 +1,30 @@
+/* 
+  Localizable.strings
+  ToDoApp
+
+  Created by kengo kato on 2021/05/15.
+  
+*/
+"idText" = "ID(メールアドレス)";
+"passText" = "パスワード";
+"loginButton" = "ログイン";
+"addButton" = "タスク追加";
+
+"cancel" = "キャンセル";
+"ok" = "ok";
+"add" = "追加";
+"edit" = "編集";
+"title" = "タイトル";
+"message" = "メッセージ";
+"date" = "日付";
+
+"todoTitle" = "新規でタスクを作成したい場合は、「追加」を選んでください。¥n編集したい場合は、タスクを選択して編集してください";
+"confirm" = "確認";
+"editTask" = "タスクを編集しますか？";
+"addTask" = "タスクを追加しますか？";
+
+"error" = "error";
+"titleIsNone" = "タイトルがありません。(必須)";
+"loginError" = "ログインに失敗しました。";
+"NotEntered" = "未入力項目があります。";
+

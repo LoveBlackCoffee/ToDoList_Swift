@@ -40,7 +40,7 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2DM-Ad-Lz1" customClass="DoneTextFierd" customModule="ToDoApp" customModuleProvider="target">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2DM-Ad-Lz1" customClass="DoneTextField" customModule="ToDoApp" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="50" width="373" height="40"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="40" id="QYb-y0-IKA"/>
@@ -62,7 +62,7 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pXX-a2-j1u" customClass="DoneTextFierd" customModule="ToDoApp" customModuleProvider="target">
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pXX-a2-j1u" customClass="DoneTextField" customModule="ToDoApp" customModuleProvider="target">
                                                                         <rect key="frame" x="0.0" y="50" width="373" height="40"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="40" id="dIh-c1-v0I"/>

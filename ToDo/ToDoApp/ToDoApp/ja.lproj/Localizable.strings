@@ -9,6 +9,7 @@
 "passText" = "パスワード";
 "loginButton" = "ログイン";
 "addButton" = "タスク追加";
+"logoutButton" = "ログアウト";
 
 "cancel" = "キャンセル";
 "ok" = "ok";
@@ -18,13 +19,16 @@
 "message" = "メッセージ";
 "date" = "日付";
 
-"todoTitle" = "新規でタスクを作成したい場合は、「追加」を選んでください。¥n編集したい場合は、タスクを選択して編集してください";
+"todoTitle" = "新規でタスクを作成したい場合は、「タスク追加」を選んでください。\n編集したい場合は、タスクを選択して編集してください";
 "confirm" = "確認";
 "editTask" = "タスクを編集しますか？";
 "addTask" = "タスクを追加しますか？";
+"deleteTask" = "タスクを削除しますか？";
+"deleteTaskFailed" = "タスクの削除に失敗しました";
 
 "error" = "error";
 "titleIsNone" = "タイトルがありません。(必須)";
 "loginError" = "ログインに失敗しました。";
 "NotEntered" = "未入力項目があります。";
 
+"delete" = "削除";

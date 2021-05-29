@@ -24,7 +24,7 @@ struct User: Codable {
         return ["user_id": userId,
                 "mail": mail,
                 "password": password ?? "",
-                "login_date": loginDate != nil ? DateUtils.stringFromDate(date: loginDate!, format: "yyyyMMddHHmm") : ""
+                "login_date": loginDate != nil ? Util.stringFromDate(date: loginDate!, format: "yyyyMMddHHmm") : ""
         ]
     }
     
@@ -34,7 +34,7 @@ struct User: Codable {
             userId: dictionary["user_id"] as? String ?? "",
              mail: dictionary["mail"] as? String ?? "",
             password: dictionary["password"] as? String,
-            loginDate: date.count > 0 ? DateUtils.dateFromString(string: date, format: "YYYYMMddHHmm"): Date())
+            loginDate: date.count > 0 ? Util.dateFromString(string: date, format: "YYYYMMddHHmm"): Date())
     }
     
 }

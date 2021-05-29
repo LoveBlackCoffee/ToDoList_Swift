@@ -11,9 +11,9 @@ import Firebase
 /// ログイン画面
 class LoginViewController: UIViewController {
     @IBOutlet weak var idLabel: UILabel!
-    @IBOutlet weak var idTextField: DoneTextFierd!
+    @IBOutlet weak var idTextField: DoneTextField!
     @IBOutlet weak var passLabel: UILabel!
-    @IBOutlet weak var passTextField: DoneTextFierd!
+    @IBOutlet weak var passTextField: DoneTextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -133,18 +133,12 @@ class LoginViewController: UIViewController {
                         strongSelf.transitionTodoList(uid: uid)
                     }
                 } else {
-                    DateUtils.showAlert(title: "error".localize(), message: "loginError", positiveButton: "ok".localize())
+                    Util.showAlert(title: "error".localize(), message: "loginError".localize(), positiveButton: "ok".localize())
                 }
             }
         } else {
-            DateUtils.showAlert(title: "error".localize(), message: "NotEntered", positiveButton: "ok".localize())
+            Util.showAlert(title: "error".localize(), message: "NotEntered".localize(), positiveButton: "ok".localize())
         }
     }
     
-}
-
-extension String {
-    func localize(comment: String = "") -> String {
-        return NSLocalizedString(self, comment: comment)
-    }
 }

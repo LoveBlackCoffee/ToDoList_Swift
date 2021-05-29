@@ -18,7 +18,23 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FX4-n9-if2">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="114"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3hi-TN-4UV">
+                                        <rect key="frame" x="10" y="54" width="100" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="BsJ-uz-3ej"/>
+                                            <constraint firstAttribute="height" constant="50" id="rl7-DU-vHg"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="logoutAction:" destination="Y07-8t-IFx" eventType="touchUpInside" id="hsK-ya-aBT"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.35294117647058826" green="0.78431372549019607" blue="0.73310245925566464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="3hi-TN-4UV" secondAttribute="bottom" constant="10" id="goD-FY-4pt"/>
+                                    <constraint firstItem="3hi-TN-4UV" firstAttribute="leading" secondItem="FX4-n9-if2" secondAttribute="leading" constant="10" id="yVP-h1-a7r"/>
+                                </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gdI-Cl-e6W">
                                 <rect key="frame" x="0.0" y="114" width="414" height="748"/>
@@ -28,7 +44,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ubi-47-YrP">
                                                 <rect key="frame" x="10" y="10" width="394" height="80"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -88,6 +104,7 @@
                     </view>
                     <connections>
                         <outlet property="addButton" destination="HzH-yl-fOG" id="r7n-yM-6Rb"/>
+                        <outlet property="logoutButton" destination="3hi-TN-4UV" id="3hE-Z1-Rd2"/>
                         <outlet property="tableView" destination="3SV-34-dg8" id="kmo-rB-ytE"/>
                         <outlet property="titleLabel" destination="Ubi-47-YrP" id="VZ2-0S-9q3"/>
                     </connections>

@@ -10,14 +10,14 @@ import Firebase
 
 ///追加画面
 
-protocol AddToDoViewDelegate {
+protocol AddToDoViewDelegate: AnyObject {
     func updateTodoData()
 }
 
 class AddToDoView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var titleTextField: DoneTextFierd!
+    @IBOutlet weak var titleTextField: DoneTextField!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageTextField: DoneTextView!
     @IBOutlet weak var dateLabel: UILabel!
@@ -30,17 +30,17 @@ class AddToDoView: UIView {
     private var todoData: Todo!
     private var userId: String?
     private var document: String?
-    var delegate: AddToDoViewDelegate?
+    weak var delegate: AddToDoViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        instantiateFromNib()
+        commonInit()
         config()
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        instantiateFromNib()
+        commonInit()
         config()
     }
     
@@ -62,6 +62,11 @@ class AddToDoView: UIView {
     
     @objc func keyboardWillHide(notification: Notification) {
         scrollView.contentSize = CGSize(width: self.frame.size.width, height: self.frame.size.height)
+    }
+    
+    @objc func tapped(_ sender: UITapGestureRecognizer) {
+        removeNotification()
+        self.removeFromSuperview()
     }
     
     func setAddNeedData(todoData: Todo) {
@@ -97,12 +102,7 @@ class AddToDoView: UIView {
         setNotification()
     }
     
-    @objc func tapped(_ sender: UITapGestureRecognizer) {
-        removeNotification()
-        self.removeFromSuperview()
-    }
-    
-    private func instantiateFromNib() {
+    private func commonInit() {
         let nib = UINib(nibName: "AddToDoView", bundle: Bundle(for: type(of: self)))
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
         view.frame = self.bounds
@@ -115,11 +115,7 @@ class AddToDoView: UIView {
     private func updateData(sendData: [String: Any], complete: @escaping ((Bool) -> ())) {
         if let document = document {
             let db = Firestore.firestore()
-            db.collection("todo_data").document(document).setData(sendData, merge: true, completion: { [weak self] err in
-                guard let strongSelf = self else {
-                    complete(false)
-                    return
-                }
+            db.collection("todo_data").document(document).setData(sendData, merge: true, completion: { err in
                 if let err = err {
                     print("Error adding document: \(err)")
                     complete(false)
@@ -136,11 +132,7 @@ class AddToDoView: UIView {
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
         
-        ref = db.collection("todo_data").addDocument(data: sendData) { [weak self] err in
-            guard let strongSelf = self else {
-                complete(false)
-                return
-            }
+        ref = db.collection("todo_data").addDocument(data: sendData) { err in
             if let err = err {
                 print("Error adding document: \(err)")
                 complete(false)
@@ -179,7 +171,7 @@ class AddToDoView: UIView {
                 }
             }
         } else {
-            DateUtils.showAlert(title: "error".localize(), message: "titleIsNone", positiveButton: "ok".localize())
+            Util.showAlert(title: "error".localize(), message: "titleIsNone", positiveButton: "ok".localize())
         }
     }
     
@@ -195,7 +187,7 @@ class AddToDoView: UIView {
     
     @IBAction func addAction(_ sender: Any) {
         if let _ = document {
-            DateUtils.showAlert(title: "confirm".localize(),
+            Util.showAlert(title: "confirm".localize(),
                                 message: "editTask".localize(),
                                 positiveButton: "edit".localize(),
                                 negativeButton: "cancel".localize(),positiveAction: {
@@ -203,7 +195,7 @@ class AddToDoView: UIView {
                                 },
                                 negativeAction:  {})
         } else {
-            DateUtils.showAlert(title: "confirm".localize(),
+            Util.showAlert(title: "confirm".localize(),
                                 message: "addTask".localize(),
                                 positiveButton: "add".localize(),
                                 negativeButton: "cancel".localize(),
@@ -213,54 +205,4 @@ class AddToDoView: UIView {
                                 negativeAction:  {})
         }
     }
-}
-
-class DateUtils {
-    class func dateFromString(string: String, format: String) -> Date {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.dateFormat = format
-        return formatter.date(from: string)!
-    }
-    
-    class func stringFromDate(date: Date, format: String) -> String {
-        let formatter: DateFormatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.dateFormat = format
-        return formatter.string(from: date)
-    }
-    
-    class func showAlert(title: String?, message:String?,
-                         positiveButton: String,
-                         negativeButton: String? = nil,
-                         positiveAction: (() -> ())?  = nil,
-                         negativeAction: (() -> ())?  = nil) {
-        
-        if let vc = DateUtils.getTopViewController() {
-            let dialog = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            dialog.addAction(UIAlertAction(title: positiveButton, style: .default, handler: { (action) in
-                if let positiveAction = positiveAction {
-                    positiveAction()
-                }
-            }))
-            
-            if let negativeButton = negativeButton {
-                dialog.addAction(UIAlertAction(title: negativeButton, style: .cancel, handler: { (action) in
-                    if let negativeeAction = negativeAction {
-                        negativeeAction()
-                    }
-                }))
-            }
-            vc.present(dialog, animated: true, completion: nil)
-        }
-    }
-    
-    class func getTopViewController() -> UIViewController? {
-        var vc = UIApplication.shared.windows.first?.rootViewController
-        while vc?.presentedViewController != nil {
-            vc = vc?.presentedViewController
-        }
-        return vc
-    }
-    
 }

@@ -13,6 +13,7 @@ class ToDoListViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
     
     private var todoList: [Todo] = []
     private var userId: String?
@@ -37,9 +38,14 @@ class ToDoListViewController: UIViewController {
         }
     }
     
+    @IBAction func logoutAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     private func config() {
         titleLabel.text = "todoTitle".localize()
         addButton.setTitle("addButton".localize(), for: .normal)
+        logoutButton.setTitle("logoutButton".localize(), for: .normal)
         self.tableView.register(UINib(nibName: "TodoCell", bundle: nil), forCellReuseIdentifier: "TodoCell")
         
         getTodoData()
@@ -81,14 +87,15 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath) as! TodoCell
+        cell.delegate = self
         if todoList.count > indexPath.row {
             let todo = todoList[indexPath.row]
-            let t = todo.title
+            let title = todo.title
             if let date = todo.date {
-                let dateString = DateUtils.stringFromDate(date: date, format: "YYYY/MM/dd HH:mm")
-                cell.config(date: dateString, title: t)
+                let dateString = Util.stringFromDate(date: date, format: "YYYY/MM/dd HH:mm")
+                cell.config(date: dateString, title: title, index: indexPath.row)
             } else {
-                cell.config(date: "", title: t)
+                cell.config(date: "", title: title, index: indexPath.row)
             }
             
         }
@@ -114,5 +121,26 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 extension ToDoListViewController: AddToDoViewDelegate {
     func updateTodoData() {
         getTodoData()
+    }
+}
+
+extension ToDoListViewController: TodoCellDelegate {
+    func deleteAction(index: Int) {
+        Util.showAlert(title: "confirm".localize(),
+                            message: "deleteTask".localize(),
+                            positiveButton: "ok".localize(),
+                            negativeButton: "cancel".localize()) {
+            let todo = self.todoList[index]
+            if let id = todo.documentId {
+                let db = Firestore.firestore()
+                db.collection("todo_data").document(id).delete { error in
+                    if error == nil {
+                        self.getTodoData()
+                    } else {
+                        Util.showAlert(title: "error".localize(), message: "deleteTaskFailedr".localize(), positiveButton: "ok".localize())
+                    }
+                }
+            }
+        } negativeAction: {}
     }
 }

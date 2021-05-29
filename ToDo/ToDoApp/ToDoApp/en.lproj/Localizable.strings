@@ -9,6 +9,7 @@
 "passText" = "PassWord";
 "loginButton" = "login";
 "addButton" = "add Task";
+"logoutButton" = "logout";
 
 "cancel" = "cancel";
 "ok" = "ok";
@@ -18,13 +19,16 @@
 "message" = "message";
 "date" = "date";
 
-"todoTitle" = "If you want to create a new task, select \"Add\". ¥n If you want to edit, select the task and edit";
+"todoTitle" = "If you want to create a new task, select \"add Task\". \nIf you want to edit, select the task and edit";
 "confirm" = "confirm";
 "editTask" = "task edit?";
 "addTask" = "add Task";
+"deleteTask" = "delete task?";
+"deleteTaskFailed" = "delete Task failed";
 
 "error" = "error";
 "titleIsNone" = "title is none";
 "loginError" = "login error";
 "NotEntered" = "Not entered";
 
+"delete" = "delete";

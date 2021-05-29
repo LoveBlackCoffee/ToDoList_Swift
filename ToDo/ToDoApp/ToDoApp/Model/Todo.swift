@@ -19,7 +19,7 @@ struct Todo: Codable {
         return ["user_id": userId,
                 "title": title,
                 "message": message ?? "",
-                "date": date != nil ? DateUtils.stringFromDate(date: date!, format: "yyyyMMddHHmm") : ""
+                "date": date != nil ? Util.stringFromDate(date: date!, format: "yyyyMMddHHmm") : ""
         ]
     }
     
@@ -40,7 +40,7 @@ struct Todo: Codable {
             date: nil)
         
         if let date = dictionary["date"] as? String, date.count > 0 {
-            todo.date = DateUtils.dateFromString(string: date, format: "YYYYMMddHHmm")
+            todo.date = Util.dateFromString(string: date, format: "YYYYMMddHHmm")
         }
         return todo
     }

@@ -8,10 +8,56 @@
 import UIKit
 
 class Util {
+    class func dateFromString(string: String, format: String) -> Date {
+        let formatter: DateFormatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = format
+        return formatter.date(from: string)!
+    }
+    
+    class func stringFromDate(date: Date, format: String) -> String {
+        let formatter: DateFormatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = format
+        return formatter.string(from: date)
+    }
+    
+    class func showAlert(title: String?, message:String?,
+                         positiveButton: String,
+                         negativeButton: String? = nil,
+                         positiveAction: (() -> ())?  = nil,
+                         negativeAction: (() -> ())?  = nil) {
+        
+        if let vc = Util.getTopViewController() {
+            let dialog = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            dialog.addAction(UIAlertAction(title: positiveButton, style: .default, handler: { (action) in
+                if let positiveAction = positiveAction {
+                    positiveAction()
+                }
+            }))
+            
+            if let negativeButton = negativeButton {
+                dialog.addAction(UIAlertAction(title: negativeButton, style: .cancel, handler: { (action) in
+                    if let negativeeAction = negativeAction {
+                        negativeeAction()
+                    }
+                }))
+            }
+            vc.present(dialog, animated: true, completion: nil)
+        }
+    }
+    
+    class func getTopViewController() -> UIViewController? {
+        var vc = UIApplication.shared.windows.first?.rootViewController
+        while vc?.presentedViewController != nil {
+            vc = vc?.presentedViewController
+        }
+        return vc
+    }
     
 }
 
-class DoneTextFierd: UITextField {
+class DoneTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,3 +110,10 @@ class DoneTextView: UITextView {
         self.resignFirstResponder()
     }
 }
+
+extension String {
+    func localize(comment: String = "") -> String {
+        return NSLocalizedString(self, comment: comment)
+    }
+}
+

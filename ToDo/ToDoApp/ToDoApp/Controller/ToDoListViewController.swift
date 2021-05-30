@@ -51,6 +51,7 @@ class ToDoListViewController: UIViewController {
         getTodoData()
     }
     
+    /// Todo情報の取得
     private func getTodoData() {
         if let userId = userId {
             let db = Firestore.firestore()

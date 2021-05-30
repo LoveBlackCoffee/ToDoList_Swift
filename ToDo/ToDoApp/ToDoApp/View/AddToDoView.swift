@@ -9,7 +9,6 @@ import UIKit
 import Firebase
 
 ///追加画面
-
 protocol AddToDoViewDelegate: AnyObject {
     func updateTodoData()
 }
@@ -44,18 +43,6 @@ class AddToDoView: UIView {
         config()
     }
     
-    private func setNotification() {
-        let notification = NotificationCenter.default
-        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func removeNotification() {
-        let notification = NotificationCenter.default
-        notification.removeObserver(self,name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        notification.removeObserver(self,name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
     @objc func keyboardWillShow(notification: Notification) {
         scrollView.contentSize = CGSize(width: self.frame.size.width, height: self.frame.size.height * 1.2)
     }
@@ -69,6 +56,8 @@ class AddToDoView: UIView {
         self.removeFromSuperview()
     }
     
+    /// 編集用データ追加
+    /// - Parameter todoData: 編集用データ
     func setAddNeedData(todoData: Todo) {
         self.todoData = todoData
         self.userId = todoData.userId
@@ -102,6 +91,18 @@ class AddToDoView: UIView {
         setNotification()
     }
     
+    private func setNotification() {
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func removeNotification() {
+        let notification = NotificationCenter.default
+        notification.removeObserver(self,name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        notification.removeObserver(self,name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     private func commonInit() {
         let nib = UINib(nibName: "AddToDoView", bundle: Bundle(for: type(of: self)))
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
@@ -112,6 +113,11 @@ class AddToDoView: UIView {
         self.addSubview(view)
     }
     
+    
+    /// データ更新
+    /// - Parameters:
+    ///   - sendData: 更新データ
+    ///   - complete:
     private func updateData(sendData: [String: Any], complete: @escaping ((Bool) -> ())) {
         if let document = document {
             let db = Firestore.firestore()
@@ -128,6 +134,11 @@ class AddToDoView: UIView {
         }
     }
     
+    
+    /// データ追加
+    /// - Parameters:
+    ///   - sendData: 追加データ
+    ///   - complete:
     private func addData(sendData: [String: Any], complete: @escaping ((Bool) -> ())) {
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil

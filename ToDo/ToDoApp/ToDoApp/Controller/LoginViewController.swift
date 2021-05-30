@@ -60,6 +60,11 @@ class LoginViewController: UIViewController {
         scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height)
     }
     
+    /// ログイン処理
+    /// - Parameters:
+    ///   - mail: メール
+    ///   - password: パスワード
+    ///   - complete:　成功、失敗　uid
     private func login(mail: String, password: String, complete:(@escaping (Bool, String?) -> ())) {
         Auth.auth().signIn(withEmail: mail, password: password) {[weak self] authResult, error in
             guard let strongSelf = self else {
@@ -76,6 +81,8 @@ class LoginViewController: UIViewController {
         }
     }
     
+    /// ユーザ情報の更新
+    /// - Parameter uid
     private func updateUserInfo(uid: String?) {
         guard let uid = uid else {
             return
@@ -88,6 +95,7 @@ class LoginViewController: UIViewController {
             }
             if let document = document, document.exists, let userData = document.data() {
                 var user = User.convertData(dictionary: userData)
+                // 現状特に使用をしていないが、ログイン日時を更新するようにしている
                 user.loginDate = Date()
                 strongSelf.updateUserInfoData(userData: user)
             } else {
